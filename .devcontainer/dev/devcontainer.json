@@ -18,17 +18,20 @@
 		"IS_DEVCONTAINER": "True"
 	},
 	"features": {
-		"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
-			"moby": true,
-			"installDockerBuildx": true,
-			"installDockerComposeSwitch": true,
-			"version": "latest",
-			"dockerDashComposeVersion": "none"
-		},
-		"ghcr.io/devcontainers/features/github-cli:1": {
-			"installDirectlyFromGitHubRelease": true,
-			"version": "latest"
-		}
+    	"ghcr.io/devcontainers/features/python:1": {
+        	"version": "3.12"
+    	},
+    	"ghcr.io/devcontainers/features/docker-outside-of-docker:1": {
+    	    "moby": true,
+    	    "installDockerBuildx": true,
+    	    "installDockerComposeSwitch": true,
+     	   "version": "latest",
+    	    "dockerDashComposeVersion": "none"
+  	  },
+  	  "ghcr.io/devcontainers/features/github-cli:1": {
+ 	       "installDirectlyFromGitHubRelease": true,
+   	     "version": "latest"
+ 	   }
 	},
 	"customizations": {
 		"vscode": {
