@@ -67,14 +67,14 @@ Windows PowerShell:
 
 ```powershell
 $env:MLFLOW_TRACKING_USERNAME="admin"
-$env:MLFLOW_TRACKING_PASSWORD="password"
+$env:MLFLOW_TRACKING_PASSWORD="<MLFLOW_PASSWORD>"
 ```
 
 Linux/macOS:
 
 ```bash
 export MLFLOW_TRACKING_USERNAME=admin
-export MLFLOW_TRACKING_PASSWORD=password
+export MLFLOW_TRACKING_PASSWORD="<MLFLOW_PASSWORD>"
 ```
 
 Then run:
