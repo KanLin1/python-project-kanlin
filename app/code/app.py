@@ -8,7 +8,7 @@ import pandas as pd
 
 MLFLOW_TRACKING_URI = os.getenv(
     "MLFLOW_TRACKING_URI",
-    "http://mlflow.ml.brain.cs.ait.ac.th/"
+    "https://mlflow.ml.brain.cs.ait.ac.th"
 )
 
 MODEL_NAME = os.getenv(
@@ -23,7 +23,7 @@ MODEL_STAGE = os.getenv(
 
 os.environ.setdefault(
     "MLFLOW_TRACKING_USERNAME",
-    "admin"
+    "student"
 )
 
 mlflow.set_tracking_uri(
