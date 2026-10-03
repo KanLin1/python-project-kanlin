@@ -26,7 +26,7 @@ jobs:
           pip install numpy pytest
 
       - name: Run unit tests
-        run: pytest -q
+        run: pytest -q tests
 
   deploy:
     needs: test
