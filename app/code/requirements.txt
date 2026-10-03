@@ -1,0 +1,6 @@
+dash
+numpy
+pandas
+scikit-learn
+cloudpickle
+mlflow>=2.9,<3
