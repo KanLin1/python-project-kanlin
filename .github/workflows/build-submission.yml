@@ -110,5 +110,6 @@ jobs:
             echo "No notebook changes to commit."
           else
             git commit -m "Run A3 notebook and update PDF [skip ci]"
+            git pull --rebase origin main
             git push
           fi
