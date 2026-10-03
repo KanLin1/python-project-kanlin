@@ -1,0 +1,2258 @@
+%PDF-1.4
+%AAAA
+1 0 obj
+<< /Type /Catalog /Pages 2 0 R >>
+endobj
+2 0 obj
+<< /Type /Pages /Kids [6 0 R 8 0 R 10 0 R 12 0 R 14 0 R 16 0 R 18 0 R 20 0 R 22 0 R 24 0 R 26 0 R 28 0 R 30 0 R 32 0 R 34 0 R 36 0 R] /Count 16 >>
+endobj
+3 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+4 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+5 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Courier >>
+endobj
+6 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 7 0 R >>
+endobj
+7 0 obj
+<< /Length 4224 >>
+stream
+0.00 g
+BT /F2 17.0 Tf 1 0 0 1 46 792.0 Tm (A3 - Predicting Car Price III) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 764.0 Tm (Name: Kan Lin) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 752.0 Tm (Student ID: st127119) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 735.0 Tm (This assignment is about changing the car price problem into classification.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 718.0 Tm (I use the same car dataset and cleaning steps from my previous assignments.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 706.0 Tm (I divide the selling price into four classes and use Multinomial Logistic Regression.) Tj ET
+0.00 g
+BT /F2 13.5 Tf 1 0 0 1 46 681.0 Tm (Task 1 - Classification) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 651.5 Tm (Import Libraries) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 629.0 Tm (I import the libraries that I need for this assignment.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 612.0 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 600.0 Tm (import os) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 590.8 Tm (import json) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 581.6 Tm (import time) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 572.4 Tm (from pathlib import Path) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 559.2 Tm (import numpy as np) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 550.0 Tm (import pandas as pd) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 540.8 Tm (import matplotlib.pyplot as plt) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 527.6 Tm (from sklearn.model_selection import train_test_split) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 518.4 Tm (from sklearn.preprocessing import StandardScaler) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 509.2 Tm (from sklearn.metrics import classification_report, confusion_matrix) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 488.0 Tm (Load the Dataset) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 465.5 Tm (I load the car dataset and check the first few rows.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 448.5 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 436.5 Tm (df = pd.read_csv\("Cars.csv"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 423.3 Tm (print\("Original shape:", df.shape\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 414.1 Tm (df.head\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 392.9 Tm (Clean Fuel Column) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 370.4 Tm (I remove CNG and LPG cars so the mileage unit is more consistent.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 353.4 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 341.4 Tm (#Check fuel types) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 332.2 Tm (print\(df['fuel'].value_counts\(\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 319.0 Tm (#Remove CNG and LPG cars) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 309.8 Tm (df = df[~df['fuel'].isin\(['CNG', 'LPG']\)].copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 296.6 Tm (print\("\\nFuel types after cleaning:"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 287.4 Tm (print\(df['fuel'].value_counts\(\)\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 266.2 Tm (Clean Owner Column) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 243.7 Tm (I change the owner types into numbers and remove Test Drive Cars.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 226.7 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 214.7 Tm (#Change owner types into numbers) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 205.5 Tm (owner_map = {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 196.3 Tm (    'First Owner': 1,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 187.1 Tm (    'Second Owner': 2,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 177.9 Tm (    'Third Owner': 3,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 168.7 Tm (    'Fourth & Above Owner': 4,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 159.5 Tm (    'Test Drive Car': 5) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 150.3 Tm (}) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 137.1 Tm (df['owner'] = df['owner'].map\(owner_map\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 123.9 Tm (#Remove Test Drive Cars) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 114.7 Tm (df = df[df['owner'] != 5].copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 101.5 Tm (df['owner'].value_counts\(\).sort_index\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 80.3 Tm (Clean Mileage, Engine and Max Power) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 57.8 Tm (I remove the text units and change these columns into numbers.) Tj ET
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 9 0 R >>
+endobj
+9 0 obj
+<< /Length 4861 >>
+stream
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 800.0 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 788.0 Tm (#Clean mileage) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 778.8 Tm (df['mileage'] = pd.to_numeric\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 769.6 Tm (    df['mileage'].str.split\(\).str[0],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 760.4 Tm (    errors='coerce') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 751.2 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 738.0 Tm (#Clean engine) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 728.8 Tm (df['engine'] = pd.to_numeric\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 719.6 Tm (    df['engine'].str.split\(\).str[0],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 710.4 Tm (    errors='coerce') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 701.2 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 688.0 Tm (#Clean max power) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 678.8 Tm (df['max_power'] = pd.to_numeric\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 669.6 Tm (    df['max_power'].str.replace\('bhp', '', regex=False\).str.strip\(\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 660.4 Tm (    errors='coerce') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 651.2 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 638.0 Tm (df[['mileage', 'engine', 'max_power']].head\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 616.8 Tm (Create Brand Column) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 594.3 Tm (I take the first word from the car name and use it as the brand.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 577.3 Tm (After that I remove the full name and torque columns.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 560.3 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 548.3 Tm (#Create brand column) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 539.1 Tm (df['brand'] = df['name'].str.split\(\).str[0]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 525.9 Tm (#Remove name and torque columns) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 516.7 Tm (df = df.drop\(columns=['name', 'torque']\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 503.5 Tm (df.head\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 482.3 Tm (Handle Missing Values) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 459.8 Tm (I fill the missing numerical values with the median.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 442.8 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 430.8 Tm (#Fill missing values with median) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 421.6 Tm (for column in ['mileage', 'engine', 'max_power', 'seats']:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 412.4 Tm (    df[column] = df[column].fillna\(df[column].median\(\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 399.2 Tm (print\("Cleaned shape:", df.shape\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 390.0 Tm (print\("\\nMissing values:"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 380.8 Tm (print\(df.isnull\(\).sum\(\)\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 359.6 Tm (Create Four Selling Price Classes) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 337.1 Tm (For this assignment I do not predict the exact selling price.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 320.1 Tm (I divide the selling price into four classes: 0, 1, 2 and 3.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 308.1 Tm (I use four groups with similar numbers of cars.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 291.1 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 279.1 Tm (#Create four price groups) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 269.9 Tm (df['price_class'], price_bins = pd.qcut\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 260.7 Tm (    df['selling_price'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 251.5 Tm (    q=4,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 242.3 Tm (    labels=False,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 233.1 Tm (    retbins=True,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 223.9 Tm (    duplicates='drop') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 214.7 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 201.5 Tm (df['price_class'] = df['price_class'].astype\(int\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 188.3 Tm (print\("Price class counts:"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 179.1 Tm (print\(df['price_class'].value_counts\(\).sort_index\(\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 165.9 Tm (print\("\\nPrice ranges:"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 156.7 Tm (for c in range\(4\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 147.5 Tm (    print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 138.3 Tm (        f"Class {c}: ") Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 129.1 Tm (        f"{price_bins[c]:,.0f} to {price_bins[c + 1]:,.0f}") Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 119.9 Tm (    \)) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 103.7 Tm (The four classes have similar numbers of cars.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 86.7 Tm (Class 0 is the lowest price group and Class 3 is the highest price group.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 69.7 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 57.7 Tm (#Plot price class distribution) Tj ET
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 11 0 R >>
+endobj
+11 0 obj
+<< /Length 4825 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (df['price_class'].value_counts\(\).sort_index\(\).plot\(kind='bar'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (plt.xlabel\('Price Class'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 781.6 Tm (plt.ylabel\('Number of Cars'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 772.4 Tm (plt.title\('Selling Price Classes'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 763.2 Tm (plt.xticks\(rotation=0\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 754.0 Tm (plt.show\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 732.8 Tm (Prepare X and y) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 710.3 Tm (I separate the input data and the price class.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 693.3 Tm (I remove selling price from X because I already used it to make the price classes.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 676.3 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 664.3 Tm (#Separate X and y) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 655.1 Tm (X = df.drop\(columns=['selling_price', 'price_class']\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 645.9 Tm (y = df['price_class'].copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 632.7 Tm (#Change text columns into numbers) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 623.5 Tm (X = pd.get_dummies\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 614.3 Tm (    X,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 605.1 Tm (    columns=['fuel', 'seller_type', 'transmission', 'brand'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 595.9 Tm (    dtype=float) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 586.7 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 573.5 Tm (print\("X shape:", X.shape\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 564.3 Tm (print\("y shape:", y.shape\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 551.1 Tm (X.head\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 529.9 Tm (Split and Scale the Data) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 507.4 Tm (I split the data into training data and testing data.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 490.4 Tm (I use 80% for training and 20% for testing.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 478.4 Tm (I also scale the input data before training the model.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 461.4 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 449.4 Tm (#Split the data) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 440.2 Tm (X_train, X_test, y_train, y_test = train_test_split\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 431.0 Tm (    X,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 421.8 Tm (    y,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 412.6 Tm (    test_size=0.2,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 403.4 Tm (    random_state=42,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 394.2 Tm (    stratify=y) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 385.0 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 371.8 Tm (#Scale the data) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 362.6 Tm (scaler = StandardScaler\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 349.4 Tm (X_train_scaled = scaler.fit_transform\(X_train\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 340.2 Tm (X_test_scaled = scaler.transform\(X_test\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 327.0 Tm (print\("X_train_scaled shape:", X_train_scaled.shape\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 317.8 Tm (print\("X_test_scaled shape:", X_test_scaled.shape\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 296.6 Tm (Add Intercept and One-Hot Target) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 274.1 Tm (I add one intercept column for the model.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 257.1 Tm (I also change the four class labels into one-hot format.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 240.1 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 228.1 Tm (#Add intercept column) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 218.9 Tm (X_train_model = np.c_[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 209.7 Tm (    np.ones\(X_train_scaled.shape[0]\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 200.5 Tm (    X_train_scaled) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 191.3 Tm (]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 178.1 Tm (X_test_model = np.c_[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 168.9 Tm (    np.ones\(X_test_scaled.shape[0]\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 159.7 Tm (    X_test_scaled) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 150.5 Tm (]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 137.3 Tm (#Change y into one-hot format) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 128.1 Tm (k = 4) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 118.9 Tm (y_train_onehot = np.eye\(k\)[y_train.to_numpy\(\)]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 105.7 Tm (print\("Training shape:", X_train_model.shape\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 96.5 Tm (print\("Testing shape:", X_test_model.shape\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 87.3 Tm (print\("One-hot target shape:", y_train_onehot.shape\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 66.1 Tm (Multinomial Logistic Regression) Tj ET
+endstream
+endobj
+12 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 13 0 R >>
+endobj
+13 0 obj
+<< /Length 5665 >>
+stream
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 795.0 Tm (I use the Logistic Regression class from the class notebook and modify it for this) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 783.0 Tm (assignment.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 766.0 Tm (I add the required classification metrics and the option to use L2 penalty.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 749.0 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 737.0 Tm (class LogisticRegression:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 723.8 Tm (    def __init__\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 714.6 Tm (        self,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 705.4 Tm (        k,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 696.2 Tm (        n,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 687.0 Tm (        method="batch",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 677.8 Tm (        alpha=0.05,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 668.6 Tm (        max_iter=500,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 659.4 Tm (        penalty=None,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 650.2 Tm (        l=0.0,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 641.0 Tm (        random_state=42) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 631.8 Tm (    \):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 622.6 Tm (        self.k = k) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 613.4 Tm (        self.n = n) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 604.2 Tm (        self.method = method) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 595.0 Tm (        self.alpha = alpha) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 585.8 Tm (        self.max_iter = max_iter) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 576.6 Tm (        self.penalty = penalty) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 567.4 Tm (        self.l = l) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 558.2 Tm (        self.random_state = random_state) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 545.0 Tm (    def fit\(self, X, Y\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 535.8 Tm (        rng = np.random.default_rng\(self.random_state\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 522.6 Tm (        #Start model weights) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 513.4 Tm (        self.W = rng.normal\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 504.2 Tm (            0,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 495.0 Tm (            0.01,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 485.8 Tm (            size=\(self.n, self.k\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 476.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 463.4 Tm (        self.losses = []) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 454.2 Tm (        start_time = time.time\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 441.0 Tm (        for i in range\(self.max_iter\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 427.8 Tm (            if self.method == "batch":) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 418.6 Tm (                X_batch = X) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 409.4 Tm (                Y_batch = Y) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 396.2 Tm (            elif self.method == "minibatch":) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 387.0 Tm (                batch_size = int\(0.3 * X.shape[0]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 373.8 Tm (                idx = rng.choice\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 364.6 Tm (                    X.shape[0],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 355.4 Tm (                    size=batch_size,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 346.2 Tm (                    replace=False) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 337.0 Tm (                \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 323.8 Tm (                X_batch = X[idx]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 314.6 Tm (                Y_batch = Y[idx]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 301.4 Tm (            elif self.method == "sto":) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 292.2 Tm (                idx = rng.integers\(0, X.shape[0]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 279.0 Tm (                X_batch = X[idx:idx + 1]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 269.8 Tm (                Y_batch = Y[idx:idx + 1]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 256.6 Tm (            else:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 247.4 Tm (                raise ValueError\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 238.2 Tm (                    'method must be "batch", "minibatch" or "sto"') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 229.0 Tm (                \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 215.8 Tm (            loss, grad = self.gradient\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 206.6 Tm (                X_batch,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 197.4 Tm (                Y_batch) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 188.2 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 175.0 Tm (            self.losses.append\(loss\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 161.8 Tm (            #Update model weights) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 152.6 Tm (            self.W = self.W - self.alpha * grad) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 139.4 Tm (            if i % 100 == 0:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 130.2 Tm (                print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 121.0 Tm (                    f"Loss at iteration {i}: ") Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 111.8 Tm (                    f"{loss:.6f}") Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 102.6 Tm (                \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 89.4 Tm (        self.training_time_ = time.time\(\) - start_time) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 76.2 Tm (        print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 67.0 Tm (            "Training time:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 57.8 Tm (            round\(self.training_time_, 3\),) Tj ET
+endstream
+endobj
+14 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 15 0 R >>
+endobj
+15 0 obj
+<< /Length 5474 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (            "seconds") Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 777.6 Tm (        return self) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 764.4 Tm (    def gradient\(self, X, Y\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 755.2 Tm (        m = X.shape[0]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 742.0 Tm (        #Get predicted probabilities) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 732.8 Tm (        h = self.h_theta\(X, self.W\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 719.6 Tm (        #Calculate loss) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 710.4 Tm (        loss = -np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 701.2 Tm (            Y * np.log\(h + 1e-15\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 692.0 Tm (        \) / m) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 678.8 Tm (        #Calculate error) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 669.6 Tm (        error = h - Y) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 656.4 Tm (        #Calculate gradient) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 647.2 Tm (        grad = self.softmax_grad\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 638.0 Tm (            X,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 628.8 Tm (            error) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 619.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 606.4 Tm (        #Add L2 penalty if selected) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 597.2 Tm (        if self.penalty == "l2":) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 588.0 Tm (            W_reg = self.W.copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 574.8 Tm (            #Do not add penalty to intercept) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 565.6 Tm (            W_reg[0, :] = 0.0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 552.4 Tm (            loss += self.l * np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 543.2 Tm (                W_reg ** 2) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 534.0 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 520.8 Tm (            grad += \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 511.6 Tm (                2.0 *) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 502.4 Tm (                self.l *) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 493.2 Tm (                W_reg) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 484.0 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 470.8 Tm (        return loss, grad) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 457.6 Tm (    def softmax\(self, z\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 448.4 Tm (        #Keep softmax values stable) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 439.2 Tm (        z = z - np.max\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 430.0 Tm (            z,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 420.8 Tm (            axis=1,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 411.6 Tm (            keepdims=True) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 402.4 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 389.2 Tm (        exp_scores = np.exp\(z\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 376.0 Tm (        return exp_scores / np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 366.8 Tm (            exp_scores,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 357.6 Tm (            axis=1,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 348.4 Tm (            keepdims=True) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 339.2 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 326.0 Tm (    def softmax_grad\(self, X, error\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 316.8 Tm (        return \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 307.6 Tm (            X.T @ error) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 298.4 Tm (        \) / X.shape[0]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 285.2 Tm (    def h_theta\(self, X, W\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 276.0 Tm (        return self.softmax\(X @ W\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 262.8 Tm (    def predict\(self, X\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 253.6 Tm (        return np.argmax\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 244.4 Tm (            self.h_theta\(X, self.W\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 235.2 Tm (            axis=1) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 226.0 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 212.8 Tm (    #Classification metrics) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 199.6 Tm (    def support\(self, y_true\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 190.4 Tm (        y_true = np.asarray\(y_true\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 177.2 Tm (        return np.array\([) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 168.0 Tm (            np.sum\(y_true == c\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 158.8 Tm (            for c in range\(self.k\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 149.6 Tm (        ]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 136.4 Tm (    def accuracy\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 127.2 Tm (        y_true = np.asarray\(y_true\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 118.0 Tm (        y_pred = np.asarray\(y_pred\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 104.8 Tm (        return np.mean\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 95.6 Tm (            y_true == y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 86.4 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 73.2 Tm (    def precision\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 64.0 Tm (        y_true = np.asarray\(y_true\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 54.8 Tm (        y_pred = np.asarray\(y_pred\)) Tj ET
+endstream
+endobj
+16 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 17 0 R >>
+endobj
+17 0 obj
+<< /Length 5601 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (        scores = []) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 786.8 Tm (        for c in range\(self.k\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 777.6 Tm (            tp = np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 768.4 Tm (                \(y_true == c\) &) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (                \(y_pred == c\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 736.8 Tm (            fp = np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 727.6 Tm (                \(y_true != c\) &) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 718.4 Tm (                \(y_pred == c\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 709.2 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 696.0 Tm (            denominator = tp + fp) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 682.8 Tm (            if denominator == 0:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 673.6 Tm (                score = 0.0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 664.4 Tm (            else:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 655.2 Tm (                score = tp / denominator) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 642.0 Tm (            scores.append\(score\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 628.8 Tm (        return np.array\(scores\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 615.6 Tm (    def recall\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 606.4 Tm (        y_true = np.asarray\(y_true\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 597.2 Tm (        y_pred = np.asarray\(y_pred\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 584.0 Tm (        scores = []) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 570.8 Tm (        for c in range\(self.k\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 561.6 Tm (            tp = np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 552.4 Tm (                \(y_true == c\) &) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 543.2 Tm (                \(y_pred == c\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 534.0 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 520.8 Tm (            fn = np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 511.6 Tm (                \(y_true == c\) &) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 502.4 Tm (                \(y_pred != c\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 493.2 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 480.0 Tm (            denominator = tp + fn) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 466.8 Tm (            if denominator == 0:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 457.6 Tm (                score = 0.0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 448.4 Tm (            else:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 439.2 Tm (                score = tp / denominator) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 426.0 Tm (            scores.append\(score\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 412.8 Tm (        return np.array\(scores\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 399.6 Tm (    def f1_score\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 390.4 Tm (        precision = self.precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 381.2 Tm (            y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 372.0 Tm (            y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 362.8 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 349.6 Tm (        recall = self.recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 340.4 Tm (            y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 331.2 Tm (            y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 322.0 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 308.8 Tm (        denominator = precision + recall) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 295.6 Tm (        return np.divide\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 286.4 Tm (            2 * precision * recall,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 277.2 Tm (            denominator,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 268.0 Tm (            out=np.zeros_like\(precision\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 258.8 Tm (            where=denominator != 0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 249.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 236.4 Tm (    def macro_precision\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 227.2 Tm (        return np.mean\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 218.0 Tm (            self.precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 208.8 Tm (                y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 199.6 Tm (                y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 190.4 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 181.2 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 168.0 Tm (    def macro_recall\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 158.8 Tm (        return np.mean\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 149.6 Tm (            self.recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 140.4 Tm (                y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 131.2 Tm (                y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 122.0 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 112.8 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 99.6 Tm (    def macro_f1\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 90.4 Tm (        return np.mean\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 81.2 Tm (            self.f1_score\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 72.0 Tm (                y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 62.8 Tm (                y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 53.6 Tm (            \)) Tj ET
+endstream
+endobj
+18 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 19 0 R >>
+endobj
+19 0 obj
+<< /Length 5004 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 786.8 Tm (    def weighted_precision\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 777.6 Tm (        weights = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 768.4 Tm (            self.support\(y_true\) /) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (            len\(y_true\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 736.8 Tm (        return np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 727.6 Tm (            weights *) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 718.4 Tm (            self.precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 709.2 Tm (                y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 700.0 Tm (                y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 690.8 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 681.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 668.4 Tm (    def weighted_recall\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 659.2 Tm (        weights = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 650.0 Tm (            self.support\(y_true\) /) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 640.8 Tm (            len\(y_true\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 631.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 618.4 Tm (        return np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 609.2 Tm (            weights *) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 600.0 Tm (            self.recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 590.8 Tm (                y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 581.6 Tm (                y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 572.4 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 563.2 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 550.0 Tm (    def weighted_f1\(self, y_true, y_pred\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 540.8 Tm (        weights = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 531.6 Tm (            self.support\(y_true\) /) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 522.4 Tm (            len\(y_true\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 513.2 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 500.0 Tm (        return np.sum\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 490.8 Tm (            weights *) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 481.6 Tm (            self.f1_score\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 472.4 Tm (                y_true,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 463.2 Tm (                y_pred) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 454.0 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 444.8 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 431.6 Tm (    def plot\(self\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 422.4 Tm (        plt.plot\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 413.2 Tm (            np.arange\(len\(self.losses\)\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 404.0 Tm (            self.losses,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 394.8 Tm (            label="Train Loss") Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 385.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 372.4 Tm (        plt.title\("Training Loss"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 363.2 Tm (        plt.xlabel\("Iteration"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 354.0 Tm (        plt.ylabel\("Loss"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 344.8 Tm (        plt.legend\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 335.6 Tm (        plt.show\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 314.4 Tm (Support) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 291.9 Tm (Support means the number of real samples in each class.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 274.9 Tm (For example, if there are 410 Class 0 cars in the test data, the support for Class 0 is) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 262.9 Tm (410.) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 240.9 Tm (Check My Metrics) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 218.4 Tm (I use a small example to compare my precision, recall and F1 functions with) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 206.4 Tm (scikit-learn.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 189.4 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 177.4 Tm (#Small example) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 168.2 Tm (y_true_mock = np.array\([) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 159.0 Tm (    0, 0, 0,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 149.8 Tm (    1, 1, 1,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 140.6 Tm (    2, 2, 2,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 131.4 Tm (    3, 3, 3) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 122.2 Tm (]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 109.0 Tm (y_pred_mock = np.array\([) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 99.8 Tm (    0, 1, 0,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 90.6 Tm (    1, 1, 2,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 81.4 Tm (    2, 2, 3,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 72.2 Tm (    3, 0, 3) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 63.0 Tm (]\)) Tj ET
+endstream
+endobj
+20 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 21 0 R >>
+endobj
+21 0 obj
+<< /Length 5342 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (metric_checker = LogisticRegression\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (    k=4,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 781.6 Tm (    n=1) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 772.4 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (print\("My precision:", metric_checker.precision\(y_true_mock, y_pred_mock\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (print\("My recall:", metric_checker.recall\(y_true_mock, y_pred_mock\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 740.8 Tm (print\("My F1:", metric_checker.f1_score\(y_true_mock, y_pred_mock\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 727.6 Tm (print\("\\nscikit-learn report:"\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 718.4 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 709.2 Tm (    classification_report\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 700.0 Tm (        y_true_mock,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 690.8 Tm (        y_pred_mock,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 681.6 Tm (        labels=[0, 1, 2, 3],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 672.4 Tm (        zero_division=0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 663.2 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 654.0 Tm (\)) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 637.8 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 625.8 Tm (#Check that the results are the same) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 616.6 Tm (sk_report_mock = classification_report\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 607.4 Tm (    y_true_mock,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 598.2 Tm (    y_pred_mock,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 589.0 Tm (    labels=[0, 1, 2, 3],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 579.8 Tm (    output_dict=True,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 570.6 Tm (    zero_division=0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 561.4 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 548.2 Tm (for c in range\(4\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 539.0 Tm (    np.testing.assert_allclose\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 529.8 Tm (        metric_checker.precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 520.6 Tm (            y_true_mock,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 511.4 Tm (            y_pred_mock) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 502.2 Tm (        \)[c],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 493.0 Tm (        sk_report_mock[str\(c\)]['precision']) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 483.8 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 470.6 Tm (    np.testing.assert_allclose\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 461.4 Tm (        metric_checker.recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 452.2 Tm (            y_true_mock,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 443.0 Tm (            y_pred_mock) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 433.8 Tm (        \)[c],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 424.6 Tm (        sk_report_mock[str\(c\)]['recall']) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 415.4 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 402.2 Tm (    np.testing.assert_allclose\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 393.0 Tm (        metric_checker.f1_score\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 383.8 Tm (            y_true_mock,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 374.6 Tm (            y_pred_mock) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 365.4 Tm (        \)[c],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 356.2 Tm (        sk_report_mock[str\(c\)]['f1-score']) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 347.0 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 333.8 Tm (print\("My metric functions match scikit-learn."\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 312.6 Tm (Train Logistic Regression) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 290.1 Tm (First I train Logistic Regression without L2 penalty.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 273.1 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 261.1 Tm (baseline_model = LogisticRegression\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 251.9 Tm (    k=4,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 242.7 Tm (    n=X_train_model.shape[1],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 233.5 Tm (    method='batch',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 224.3 Tm (    alpha=0.05,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 215.1 Tm (    max_iter=500,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 205.9 Tm (    penalty=None,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 196.7 Tm (    l=0.0,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 187.5 Tm (    random_state=42) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 178.3 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 165.1 Tm (baseline_model.fit\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 155.9 Tm (    X_train_model,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 146.7 Tm (    y_train_onehot) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 137.5 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 124.3 Tm (y_pred_baseline = baseline_model.predict\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 115.1 Tm (    X_test_model) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 105.9 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 92.7 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 83.5 Tm (    "\\nAccuracy:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 74.3 Tm (    baseline_model.accuracy\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 65.1 Tm (        y_test.to_numpy\(\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 55.9 Tm (        y_pred_baseline) Tj ET
+endstream
+endobj
+22 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 23 0 R >>
+endobj
+23 0 obj
+<< /Length 4895 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (\)) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 774.6 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 762.6 Tm (#Plot training loss) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 753.4 Tm (baseline_model.plot\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 732.2 Tm (Check Model Performance) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 709.7 Tm (I check accuracy, precision, recall, F1, macro average and weighted average.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 692.7 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 680.7 Tm (y_test_array = y_test.to_numpy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 667.5 Tm (precision_values = baseline_model.precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 658.3 Tm (    y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 649.1 Tm (    y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 639.9 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 626.7 Tm (recall_values = baseline_model.recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 617.5 Tm (    y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 608.3 Tm (    y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 599.1 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 585.9 Tm (f1_values = baseline_model.f1_score\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 576.7 Tm (    y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 567.5 Tm (    y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 558.3 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 545.1 Tm (support_values = baseline_model.support\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 535.9 Tm (    y_test_array) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 526.7 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 513.5 Tm (custom_report = pd.DataFrame\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 504.3 Tm (    {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 495.1 Tm (        'precision': precision_values,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 485.9 Tm (        'recall': recall_values,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 476.7 Tm (        'f1-score': f1_values,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 467.5 Tm (        'support': support_values) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 458.3 Tm (    },) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 449.1 Tm (    index=[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 439.9 Tm (        'Class 0',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 430.7 Tm (        'Class 1',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 421.5 Tm (        'Class 2',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 412.3 Tm (        'Class 3') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 403.1 Tm (    ]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 393.9 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 380.7 Tm (custom_report) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 364.5 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 352.5 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 343.3 Tm (    "Accuracy:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 334.1 Tm (    baseline_model.accuracy\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 324.9 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 315.7 Tm (        y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 306.5 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 297.3 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 284.1 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 274.9 Tm (    "Macro Precision:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 265.7 Tm (    baseline_model.macro_precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 256.5 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 247.3 Tm (        y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 238.1 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 228.9 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 215.7 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 206.5 Tm (    "Macro Recall:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 197.3 Tm (    baseline_model.macro_recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 188.1 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 178.9 Tm (        y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 169.7 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 160.5 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 147.3 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 138.1 Tm (    "Macro F1:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 128.9 Tm (    baseline_model.macro_f1\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 119.7 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 110.5 Tm (        y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 101.3 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 92.1 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 78.9 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 69.7 Tm (    "Weighted Precision:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 60.5 Tm (    baseline_model.weighted_precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 51.3 Tm (        y_test_array,) Tj ET
+endstream
+endobj
+24 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 25 0 R >>
+endobj
+25 0 obj
+<< /Length 4959 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (        y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 781.6 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 768.4 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (    "Weighted Recall:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (    baseline_model.weighted_recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 740.8 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 731.6 Tm (        y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 722.4 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 713.2 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 700.0 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 690.8 Tm (    "Weighted F1:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 681.6 Tm (    baseline_model.weighted_f1\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 672.4 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 663.2 Tm (        y_pred_baseline) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 654.0 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 644.8 Tm (\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 623.6 Tm (Compare with scikit-learn) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 601.1 Tm (I compare my results with scikit-learn classification report.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 584.1 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 572.1 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 562.9 Tm (    classification_report\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 553.7 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 544.5 Tm (        y_pred_baseline,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 535.3 Tm (        labels=[0, 1, 2, 3],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 526.1 Tm (        digits=4,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 516.9 Tm (        zero_division=0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 507.7 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 498.5 Tm (\)) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 482.3 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 470.3 Tm (#Confusion matrix) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 461.1 Tm (cm = confusion_matrix\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 451.9 Tm (    y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 442.7 Tm (    y_pred_baseline,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 433.5 Tm (    labels=[0, 1, 2, 3]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 424.3 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 411.1 Tm (plt.figure\(figsize=\(6, 5\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 401.9 Tm (plt.imshow\(cm\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 388.7 Tm (plt.xticks\(range\(4\), [0, 1, 2, 3]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 379.5 Tm (plt.yticks\(range\(4\), [0, 1, 2, 3]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 366.3 Tm (plt.xlabel\('Predicted Class'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 357.1 Tm (plt.ylabel\('True Class'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 347.9 Tm (plt.title\('Baseline Confusion Matrix'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 334.7 Tm (for i in range\(4\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 325.5 Tm (    for j in range\(4\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 316.3 Tm (        plt.text\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 307.1 Tm (            j,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 297.9 Tm (            i,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 288.7 Tm (            cm[i, j],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 279.5 Tm (            ha='center',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 270.3 Tm (            va='center') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 261.1 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 247.9 Tm (plt.colorbar\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 238.7 Tm (plt.show\(\)) Tj ET
+0.00 g
+BT /F2 13.5 Tf 1 0 0 1 46 214.5 Tm (Task 2 - Ridge Logistic Regression) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 190.0 Tm (I add L2 penalty to the Logistic Regression model.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 173.0 Tm (I try different lambda values and compare the results.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 156.0 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 144.0 Tm (experiment_configs = [) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 134.8 Tm (    {'Run': 'No penalty', 'Penalty': None, 'Lambda': 0.0},) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 125.6 Tm (    {'Run': 'Ridge 0.0001', 'Penalty': 'l2', 'Lambda': 0.0001},) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 116.4 Tm (    {'Run': 'Ridge 0.001', 'Penalty': 'l2', 'Lambda': 0.001},) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 107.2 Tm (    {'Run': 'Ridge 0.01', 'Penalty': 'l2', 'Lambda': 0.01},) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 98.0 Tm (    {'Run': 'Ridge 0.1', 'Penalty': 'l2', 'Lambda': 0.1}) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 88.8 Tm (]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 75.6 Tm (trained_models = {}) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 66.4 Tm (experiment_rows = []) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 53.2 Tm (for config in experiment_configs:) Tj ET
+endstream
+endobj
+26 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 27 0 R >>
+endobj
+27 0 obj
+<< /Length 5556 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (    print\("\\n", config['Run']\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 786.8 Tm (    model = LogisticRegression\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 777.6 Tm (        k=4,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 768.4 Tm (        n=X_train_model.shape[1],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (        method='batch',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (        alpha=0.05,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 740.8 Tm (        max_iter=500,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 731.6 Tm (        penalty=config['Penalty'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 722.4 Tm (        l=config['Lambda'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 713.2 Tm (        random_state=42) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 704.0 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 690.8 Tm (    model.fit\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 681.6 Tm (        X_train_model,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 672.4 Tm (        y_train_onehot) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 663.2 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 650.0 Tm (    prediction = model.predict\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 640.8 Tm (        X_test_model) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 631.6 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 618.4 Tm (    experiment_rows.append\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 609.2 Tm (        {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 600.0 Tm (            'Run': config['Run'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 590.8 Tm (            'Penalty': \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 581.6 Tm (                'None') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 572.4 Tm (                if config['Penalty'] is None) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 563.2 Tm (                else config['Penalty']) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 554.0 Tm (            \),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 544.8 Tm (            'Lambda': config['Lambda'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 535.6 Tm (            'Accuracy': model.accuracy\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 526.4 Tm (                y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 517.2 Tm (                prediction) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 508.0 Tm (            \),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 498.8 Tm (            'Macro Precision': model.macro_precision\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 489.6 Tm (                y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 480.4 Tm (                prediction) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 471.2 Tm (            \),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 462.0 Tm (            'Macro Recall': model.macro_recall\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 452.8 Tm (                y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 443.6 Tm (                prediction) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 434.4 Tm (            \),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 425.2 Tm (            'Macro F1': model.macro_f1\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 416.0 Tm (                y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 406.8 Tm (                prediction) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 397.6 Tm (            \),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 388.4 Tm (            'Weighted F1': model.weighted_f1\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 379.2 Tm (                y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 370.0 Tm (                prediction) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 360.8 Tm (            \),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 351.6 Tm (            'Final Loss': model.losses[-1],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 342.4 Tm (            'Training Time': model.training_time_) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 333.2 Tm (        }) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 324.0 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 310.8 Tm (    trained_models[config['Run']] = model) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 297.6 Tm (results = pd.DataFrame\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 288.4 Tm (    experiment_rows) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 279.2 Tm (\).sort_values\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 270.0 Tm (    by=['Macro F1', 'Accuracy'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 260.8 Tm (    ascending=False) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 251.6 Tm (\).reset_index\(drop=True\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 238.4 Tm (results) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 217.2 Tm (Select the Best Model) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 194.7 Tm (I choose the model with the highest Macro F1 score.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 177.7 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 165.7 Tm (best_run_name = results.loc[0, 'Run']) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 156.5 Tm (best_model = trained_models[best_run_name]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 143.3 Tm (best_prediction = best_model.predict\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 134.1 Tm (    X_test_model) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 124.9 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 111.7 Tm (print\("Best model:", best_run_name\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 98.5 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 89.3 Tm (    "Best Macro F1:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 80.1 Tm (    best_model.macro_f1\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 70.9 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 61.7 Tm (        best_prediction) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 52.5 Tm (    \)) Tj ET
+endstream
+endobj
+28 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 29 0 R >>
+endobj
+29 0 obj
+<< /Length 4762 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 786.8 Tm (print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 777.6 Tm (    "Best Accuracy:",) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 768.4 Tm (    best_model.accuracy\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (        y_test_array,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (        best_prediction) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 740.8 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 731.6 Tm (\)) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 715.4 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 703.4 Tm (#Compare lambda and Macro F1) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 694.2 Tm (ridge_results = results[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 685.0 Tm (    results['Penalty'] == 'l2') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 675.8 Tm (].sort_values\('Lambda'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 662.6 Tm (plt.semilogx\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 653.4 Tm (    ridge_results['Lambda'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 644.2 Tm (    ridge_results['Macro F1'],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 635.0 Tm (    marker='o') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 625.8 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 612.6 Tm (plt.xlabel\('Lambda'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 603.4 Tm (plt.ylabel\('Macro F1'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 594.2 Tm (plt.title\('Ridge Strength vs Macro F1'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 585.0 Tm (plt.show\(\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 563.8 Tm (Task 2 Result) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 541.3 Tm (I compare Logistic Regression without penalty and with different L2 values.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 524.3 Tm (I use the result table above to choose the best model.) Tj ET
+0.00 g
+BT /F2 13.5 Tf 1 0 0 1 46 499.3 Tm (Task 3 - MLflow and Deployment) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 474.8 Tm (Now I log the experiment to the class MLflow server.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 457.8 Tm (I use the experiment name st127119-a3.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 445.8 Tm (I save the best model as st127119-a3-model.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 428.8 Tm (I do not log the dataset.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 411.8 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 399.8 Tm (#Install MLflow only if it is not already installed) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 390.6 Tm (# %pip install "mlflow>=2.9,<3" cloudpickle) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 374.4 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 362.4 Tm (import os) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 353.2 Tm (from getpass import getpass) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 340.0 Tm (import mlflow) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 330.8 Tm (from mlflow.models import infer_signature) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 321.6 Tm (from mlflow.tracking import MlflowClient) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 308.4 Tm (#Class MLflow login) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 299.2 Tm (os.environ['MLFLOW_TRACKING_USERNAME'] = 'admin') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 286.0 Tm (if 'MLFLOW_TRACKING_PASSWORD' not in os.environ:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 276.8 Tm (    os.environ['MLFLOW_TRACKING_PASSWORD'] = getpass\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 267.6 Tm (        'MLflow password: ') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 258.4 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 245.2 Tm (MLFLOW_TRACKING_URI = 'http://mlflow.ml.brain.cs.ait.ac.th/') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 236.0 Tm (EXPERIMENT_NAME = 'st127119-a3') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 226.8 Tm (MODEL_NAME = 'st127119-a3-model') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 213.6 Tm (mlflow.set_tracking_uri\(MLFLOW_TRACKING_URI\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 204.4 Tm (mlflow.set_registry_uri\(MLFLOW_TRACKING_URI\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 195.2 Tm (mlflow.set_experiment\(EXPERIMENT_NAME\)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 174.0 Tm (Prepare Model for MLflow) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 151.5 Tm (I save the preprocessing and model together so the web app can use normal car) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 139.5 Tm (information as input.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 122.5 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 110.5 Tm (RAW_FEATURE_COLUMNS = [) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 101.3 Tm (    'year',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 92.1 Tm (    'km_driven',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 82.9 Tm (    'fuel',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 73.7 Tm (    'seller_type',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 64.5 Tm (    'transmission',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 55.3 Tm (    'owner',) Tj ET
+endstream
+endobj
+30 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 31 0 R >>
+endobj
+31 0 obj
+<< /Length 5521 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (    'mileage',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (    'engine',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 781.6 Tm (    'max_power',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 772.4 Tm (    'seats',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 763.2 Tm (    'brand') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 754.0 Tm (]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 740.8 Tm (NUMERIC_COLUMNS = [) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 731.6 Tm (    'year',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 722.4 Tm (    'km_driven',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 713.2 Tm (    'owner',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 704.0 Tm (    'mileage',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 694.8 Tm (    'engine',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 685.6 Tm (    'max_power',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 676.4 Tm (    'seats') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 667.2 Tm (]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 654.0 Tm (CATEGORICAL_COLUMNS = [) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 644.8 Tm (    'fuel',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 635.6 Tm (    'seller_type',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 626.4 Tm (    'transmission',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 617.2 Tm (    'brand') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 608.0 Tm (]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 594.8 Tm (numeric_medians = {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 585.6 Tm (    column: float\(df[column].median\(\)\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 576.4 Tm (    for column in NUMERIC_COLUMNS) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 567.2 Tm (}) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 554.0 Tm (categorical_modes = {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 544.8 Tm (    column: df[column].mode\(\)[0]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 535.6 Tm (    for column in CATEGORICAL_COLUMNS) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 526.4 Tm (}) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 513.2 Tm (feature_columns = X.columns.tolist\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 496.0 Tm (class CarPricePyfuncModel\(mlflow.pyfunc.PythonModel\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 482.8 Tm (    def __init__\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 473.6 Tm (        self,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 464.4 Tm (        classifier,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 455.2 Tm (        scaler,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 446.0 Tm (        feature_columns,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 436.8 Tm (        numeric_medians,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 427.6 Tm (        categorical_modes,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 418.4 Tm (        price_bins) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 409.2 Tm (    \):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 400.0 Tm (        self.classifier = classifier) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 390.8 Tm (        self.scaler = scaler) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 381.6 Tm (        self.feature_columns = feature_columns) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 372.4 Tm (        self.numeric_medians = numeric_medians) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 363.2 Tm (        self.categorical_modes = categorical_modes) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 354.0 Tm (        self.price_bins = np.asarray\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 344.8 Tm (            price_bins,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 335.6 Tm (            dtype=float) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 326.4 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 313.2 Tm (    def predict\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 304.0 Tm (        self,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 294.8 Tm (        context,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 285.6 Tm (        model_input) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 276.4 Tm (    \):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 267.2 Tm (        frame = pd.DataFrame\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 258.0 Tm (            model_input) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 248.8 Tm (        \).copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 235.6 Tm (        frame = frame[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 226.4 Tm (            RAW_FEATURE_COLUMNS) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 217.2 Tm (        ].copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 204.0 Tm (        for column, median in self.numeric_medians.items\(\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 194.8 Tm (            frame[column] = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 185.6 Tm (                pd.to_numeric\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 176.4 Tm (                    frame[column],) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 167.2 Tm (                    errors='coerce') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 158.0 Tm (                \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 148.8 Tm (                .fillna\(median\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 139.6 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 126.4 Tm (        for column, mode in self.categorical_modes.items\(\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 117.2 Tm (            frame[column] = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 108.0 Tm (                frame[column]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 98.8 Tm (                .fillna\(mode\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 89.6 Tm (                .astype\(str\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 80.4 Tm (            \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 67.2 Tm (        encoded = pd.get_dummies\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 58.0 Tm (            frame,) Tj ET
+endstream
+endobj
+32 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 33 0 R >>
+endobj
+33 0 obj
+<< /Length 5302 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (            columns=CATEGORICAL_COLUMNS,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (            dtype=float) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 781.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 768.4 Tm (        encoded = encoded.reindex\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (            columns=self.feature_columns,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (            fill_value=0.0) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 740.8 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 727.6 Tm (        scaled = self.scaler.transform\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 718.4 Tm (            encoded) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 709.2 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 696.0 Tm (        model_X = np.c_[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 686.8 Tm (            np.ones\(scaled.shape[0]\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 677.6 Tm (            scaled) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 668.4 Tm (        ]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 655.2 Tm (        classes = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 646.0 Tm (            self.classifier) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 636.8 Tm (            .predict\(model_X\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 627.6 Tm (            .astype\(int\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 618.4 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 605.2 Tm (        lower_bounds = np.array\([) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 596.0 Tm (            self.price_bins[c]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 586.8 Tm (            for c in classes) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 577.6 Tm (        ]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 564.4 Tm (        upper_bounds = np.array\([) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 555.2 Tm (            self.price_bins[c + 1]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 546.0 Tm (            for c in classes) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 536.8 Tm (        ]\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 523.6 Tm (        return pd.DataFrame\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 514.4 Tm (            {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 505.2 Tm (                'price_class': classes,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 496.0 Tm (                'lower_bound': lower_bounds,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 486.8 Tm (                'upper_bound': upper_bounds) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 477.6 Tm (            }) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 468.4 Tm (        \)) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 452.2 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 440.2 Tm (#Check the saved model format before MLflow) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 431.0 Tm (best_wrapper = CarPricePyfuncModel\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 421.8 Tm (    classifier=best_model,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 412.6 Tm (    scaler=scaler,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 403.4 Tm (    feature_columns=feature_columns,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 394.2 Tm (    numeric_medians=numeric_medians,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 385.0 Tm (    categorical_modes=categorical_modes,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 375.8 Tm (    price_bins=price_bins) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 366.6 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 353.4 Tm (sample_input = df[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 344.2 Tm (    RAW_FEATURE_COLUMNS) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 335.0 Tm (].head\(5\).copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 321.8 Tm (sample_output = best_wrapper.predict\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 312.6 Tm (    None,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 303.4 Tm (    sample_input) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 294.2 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 281.0 Tm (sample_output) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 259.8 Tm (Log Experiments to MLflow) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 237.3 Tm (I log the model settings and results for each experiment.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 220.3 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 208.3 Tm (logged_runs = {}) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 195.1 Tm (result_lookup = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 185.9 Tm (    results) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 176.7 Tm (    .set_index\('Run'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 167.5 Tm (    .to_dict\(orient='index'\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 158.3 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 145.1 Tm (sample_input = df[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 135.9 Tm (    RAW_FEATURE_COLUMNS) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 126.7 Tm (].head\(5\).copy\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 113.5 Tm (for run_name, model in trained_models.items\(\):) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 100.3 Tm (    row = result_lookup[run_name]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 87.1 Tm (    wrapper = CarPricePyfuncModel\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 77.9 Tm (        classifier=model,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 68.7 Tm (        scaler=scaler,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 59.5 Tm (        feature_columns=feature_columns,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 50.3 Tm (        numeric_medians=numeric_medians,) Tj ET
+endstream
+endobj
+34 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 35 0 R >>
+endobj
+35 0 obj
+<< /Length 5590 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (        categorical_modes=categorical_modes,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 790.8 Tm (        price_bins=price_bins) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 781.6 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 768.4 Tm (    output_example = wrapper.predict\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 759.2 Tm (        None,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 750.0 Tm (        sample_input) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 740.8 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 727.6 Tm (    signature = infer_signature\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 718.4 Tm (        sample_input,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 709.2 Tm (        output_example) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 700.0 Tm (    \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 686.8 Tm (    with mlflow.start_run\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 677.6 Tm (        run_name=run_name) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 668.4 Tm (    \) as run:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 655.2 Tm (        mlflow.log_params\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 646.0 Tm (            {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 636.8 Tm (                'method': model.method,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 627.6 Tm (                'alpha': model.alpha,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 618.4 Tm (                'max_iter': model.max_iter,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 609.2 Tm (                'penalty': \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 600.0 Tm (                    'none') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 590.8 Tm (                    if model.penalty is None) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 581.6 Tm (                    else model.penalty) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 572.4 Tm (                \),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 563.2 Tm (                'lambda': float\(model.l\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 554.0 Tm (            }) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 544.8 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 531.6 Tm (        mlflow.log_metrics\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 522.4 Tm (            {) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 513.2 Tm (                'accuracy': float\(row['Accuracy']\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 504.0 Tm (                'macro_precision': float\(row['Macro Precision']\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 494.8 Tm (                'macro_recall': float\(row['Macro Recall']\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 485.6 Tm (                'macro_f1': float\(row['Macro F1']\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 476.4 Tm (                'weighted_f1': float\(row['Weighted F1']\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 467.2 Tm (                'final_loss': float\(row['Final Loss']\),) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 458.0 Tm (                'training_time': float\(row['Training Time']\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 448.8 Tm (            }) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 439.6 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 426.4 Tm (        #Save model only) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 417.2 Tm (        mlflow.pyfunc.log_model\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 408.0 Tm (            artifact_path='model',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 398.8 Tm (            python_model=wrapper,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 389.6 Tm (            input_example=sample_input,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 380.4 Tm (            signature=signature) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 371.2 Tm (        \)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 358.0 Tm (        logged_runs[run_name] = run.info.run_id) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 344.8 Tm (        print\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 335.6 Tm (            run_name,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 326.4 Tm (            '->',) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 317.2 Tm (            run.info.run_id) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 308.0 Tm (        \)) Tj ET
+0.00 g
+BT /F2 11.5 Tf 1 0 0 1 46 286.8 Tm (Register the Best Model) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 264.3 Tm (I register the best model and move it to Staging.) Tj ET
+0.25 g
+BT /F2 9.5 Tf 1 0 0 1 46 247.3 Tm (Code:) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 235.3 Tm (best_run_id = logged_runs[) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 226.1 Tm (    best_run_name) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 216.9 Tm (]) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 203.7 Tm (best_model_uri = \() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 194.5 Tm (    f'runs:/{best_run_id}/model') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 185.3 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 172.1 Tm (registered_model = mlflow.register_model\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 162.9 Tm (    model_uri=best_model_uri,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 153.7 Tm (    name=MODEL_NAME) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 144.5 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 131.3 Tm (client = MlflowClient\(\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 118.1 Tm (client.transition_model_version_stage\() Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 108.9 Tm (    name=MODEL_NAME,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 99.7 Tm (    version=registered_model.version,) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 90.5 Tm (    stage='Staging') Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 81.3 Tm (\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 68.1 Tm (print\('Registered model:', MODEL_NAME\)) Tj ET
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 58.9 Tm (print\('Version:', registered_model.version\)) Tj ET
+endstream
+endobj
+36 0 obj
+<< /Type /Page /Parent 2 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 3 0 R /F2 4 0 R /F3 5 0 R >> >> /Contents 37 0 R >>
+endobj
+37 0 obj
+<< /Length 662 >>
+stream
+0.18 g
+BT /F3 7.4 Tf 1 0 0 1 52 800.0 Tm (print\('Stage: Staging'\)) Tj ET
+0.00 g
+BT /F2 13.5 Tf 1 0 0 1 46 775.8 Tm (Deployment Files and CI/CD) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 751.3 Tm (I prepare the files for the web app and GitHub.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 734.3 Tm (I use a README file, an app folder, two unit tests and GitHub Actions.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 722.3 Tm (The tests check the model input and output shape.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 705.3 Tm (GitHub Actions runs the tests when I push the code.) Tj ET
+0.00 g
+BT /F1 9.5 Tf 1 0 0 1 46 693.3 Tm (If the tests pass, deployment can continue.) Tj ET
+endstream
+endobj
+xref
+0 38
+0000000000 65535 f 
+0000000015 00000 n 
+0000000064 00000 n 
+0000000226 00000 n 
+0000000296 00000 n 
+0000000371 00000 n 
+0000000439 00000 n 
+0000000585 00000 n 
+0000004860 00000 n 
+0000005006 00000 n 
+0000009918 00000 n 
+0000010066 00000 n 
+0000014943 00000 n 
+0000015091 00000 n 
+0000020808 00000 n 
+0000020956 00000 n 
+0000026482 00000 n 
+0000026630 00000 n 
+0000032283 00000 n 
+0000032431 00000 n 
+0000037487 00000 n 
+0000037635 00000 n 
+0000043029 00000 n 
+0000043177 00000 n 
+0000048124 00000 n 
+0000048272 00000 n 
+0000053283 00000 n 
+0000053431 00000 n 
+0000059039 00000 n 
+0000059187 00000 n 
+0000064001 00000 n 
+0000064149 00000 n 
+0000069722 00000 n 
+0000069870 00000 n 
+0000075224 00000 n 
+0000075372 00000 n 
+0000081014 00000 n 
+0000081162 00000 n 
+trailer
+<< /Size 38 /Root 1 0 R >>
+startxref
+81875
+%%EOF
