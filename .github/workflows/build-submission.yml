@@ -1,0 +1,114 @@
+name: Build A3 Submission
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - "KanLin_st127119_A3_PredictingCarPrices.ipynb"
+      - "Cars.csv"
+      - ".github/workflows/build-submission.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    if: github.actor != 'github-actions[bot]'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install notebook packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas matplotlib scikit-learn nbformat nbclient ipykernel "nbconvert[webpdf]"
+
+      - name: Execute Task 1 and Task 2
+        run: |
+          python - <<'PY'
+          import nbformat
+          from nbclient import NotebookClient
+
+          path = "KanLin_st127119_A3_PredictingCarPrices.ipynb"
+
+          nb = nbformat.read(
+              path,
+              as_version=4
+          )
+
+          task3_index = None
+
+          for i, cell in enumerate(nb.cells):
+              if (
+                  cell.cell_type == "markdown"
+                  and "## Task 3 - MLflow and Deployment"
+                  in cell.source
+              ):
+                  task3_index = i
+                  break
+
+          if task3_index is None:
+              raise RuntimeError(
+                  "Task 3 heading was not found."
+              )
+
+          run_nb = nbformat.v4.new_notebook(
+              cells=nb.cells[:task3_index],
+              metadata=nb.metadata
+          )
+
+          client = NotebookClient(
+              run_nb,
+              timeout=600,
+              kernel_name="python3",
+              resources={
+                  "metadata": {
+                      "path": "."
+                  }
+              }
+          )
+
+          executed = client.execute()
+
+          nb.cells[:task3_index] = (
+              executed.cells
+          )
+
+          nbformat.write(
+              nb,
+              path
+          )
+
+          print(
+              "Task 1 and Task 2 executed."
+          )
+          PY
+
+      - name: Create PDF from notebook
+        run: |
+          jupyter nbconvert             --to webpdf             --allow-chromium-download             --output KanLin_st127119_A3_PredictingCarPrices             KanLin_st127119_A3_PredictingCarPrices.ipynb
+
+      - name: Save executed notebook and PDF
+        run: |
+          git config user.name "KanLin1"
+          git config user.email "st127119@ait.asia"
+
+          git add             KanLin_st127119_A3_PredictingCarPrices.ipynb             KanLin_st127119_A3_PredictingCarPrices.pdf
+
+          if git diff --cached --quiet; then
+            echo "No notebook changes to commit."
+          else
+            git commit -m "Run A3 notebook and update PDF [skip ci]"
+            git push
+          fi
