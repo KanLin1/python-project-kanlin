@@ -1,0 +1,50 @@
+name: Test MLflow Access
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".mlflow-connectivity-trigger"
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    env:
+      MLFLOW_TRACKING_USERNAME: admin
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+
+    steps:
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Test HTTP and HTTPS
+        run: |
+          python - <<'PY'
+          import os
+          import requests
+
+          user = os.environ["MLFLOW_TRACKING_USERNAME"]
+          password = os.environ["MLFLOW_TRACKING_PASSWORD"]
+
+          urls = [
+              "http://mlflow.ml.brain.cs.ait.ac.th/",
+              "https://mlflow.ml.brain.cs.ait.ac.th/"
+          ]
+
+          for url in urls:
+              try:
+                  r = requests.get(
+                      url,
+                      auth=(user, password),
+                      timeout=15,
+                      verify=False,
+                      allow_redirects=True
+                  )
+                  print(url, "->", r.status_code, r.url)
+              except Exception as e:
+                  print(url, "-> ERROR:", repr(e))
+          PY
