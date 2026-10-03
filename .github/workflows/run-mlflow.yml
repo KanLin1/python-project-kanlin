@@ -1,0 +1,84 @@
+name: Run A3 MLflow
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - ".mlflow-trigger"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run-mlflow:
+    runs-on: ubuntu-latest
+
+    env:
+      MLFLOW_TRACKING_USERNAME: student
+      MLFLOW_TRACKING_PASSWORD: ${{ secrets.MLFLOW_TRACKING_PASSWORD }}
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Check MLflow password secret
+        run: |
+          if [ -z "$MLFLOW_TRACKING_PASSWORD" ]; then
+            echo "MLFLOW_TRACKING_PASSWORD secret is not set."
+            exit 1
+          fi
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install notebook packages
+        run: |
+          python -m pip install --upgrade pip
+          pip install numpy pandas matplotlib scikit-learn nbformat nbclient ipykernel "nbconvert[webpdf]" "mlflow>=2.9,<3" cloudpickle
+
+      - name: Execute full A3 notebook including MLflow
+        run: |
+          python - <<'PY'
+          import nbformat
+          from nbclient import NotebookClient
+
+          path = "KanLin_st127119_A3_PredictingCarPrices.ipynb"
+
+          nb = nbformat.read(path, as_version=4)
+
+          client = NotebookClient(
+              nb,
+              timeout=1200,
+              kernel_name="python3",
+              resources={"metadata": {"path": "."}}
+          )
+
+          executed = client.execute()
+          nbformat.write(executed, path)
+          print("Full A3 notebook executed, including MLflow.")
+          PY
+
+      - name: Create PDF from executed notebook
+        run: |
+          jupyter nbconvert             --to webpdf             --allow-chromium-download             --output KanLin_st127119_A3_PredictingCarPrices             KanLin_st127119_A3_PredictingCarPrices.ipynb
+
+      - name: Save final notebook and PDF
+        run: |
+          git config user.name "KanLin1"
+          git config user.email "st127119@ait.asia"
+
+          git add             KanLin_st127119_A3_PredictingCarPrices.ipynb             KanLin_st127119_A3_PredictingCarPrices.pdf
+
+          if git diff --cached --quiet; then
+            echo "No notebook changes to commit."
+          else
+            git commit -m "Run A3 MLflow and update submission [skip ci]"
+            git pull --rebase origin main
+            git push
+          fi
